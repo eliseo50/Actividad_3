@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zodiac Finder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mystery+Quest&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        font: inherit;
+      }
+
+      :root {
+        --animation-duration: 100ms;
+
+        --color-gold: #ffd700;
+      }
+
+      video,
+      img,
+      picture,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+
+      body {
+        min-height: 100vh;
+      }
+
+      body {
+        font-family: "Mystery Quest", serif;
+        font-weight: 400;
+        font-style: normal;
+        background-color: #0b042b;
+        background-image: url("https://ik.imagekit.io/ec18yjhnk/8dP3WeoZMmXFdnCZU8J1e0eegJx2/55b17b59-50e5-4310-ac4c-62182f67633b.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        min-height: 100vh;
+        position: relative;
+      }
+
+      .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: clamp(100px, 90%, 900px);
+        margin-inline: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-size: 3rem;
+
+        gap: 0.5em;
+
+        flex-wrap: wrap;
+      }
+
+      .carousel--left {
+        order: 1;
+      }
+
+      .btn-calculate {
+        order: 2;
+
+        width: fit-content;
+
+        font-size: 1em;
+        height: fit-content;
+
+        border-radius: 0.125em;
+        border: none;
+
+        background-color: transparent;
+        color: var(--color-gold);
+        line-height: 1em;
+        padding: 0.25em;
+
+        border: 0.0625em solid var(--color-gold);
+      }
+
+      .btn-calculate:hover {
+        cursor: pointer;
+        background-color: var(--color-gold);
+        color: #0b042b;
+
+        box-shadow: 0 0 0.25em 0.01em var(--color-gold);
+        border-color: transparent;
+      }
+
+      .carousel--right {
+        order: 3;
+      }
+
+      .carousel {
+        width: 6em;
+        height: 4em;
+
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        perspective: 1.5625em;
+        perspective-origin: 50% 50%;
+
+        overflow: hidden;
+        color: white;
+      }
+
+      .carousel > .item {
+        width: 100%;
+        line-height: 1em;
+
+        position: absolute;
+
+        display: flex;
+        justify-content: center;
+        text-align: center;
+
+        text-transform: uppercase;
+        opacity: 1;
+
+        border-inline: 0.0625em solid var(--color-gold);
+
+        transition: top var(--animation-duration) ease-in-out,
+          opacity var(--animation-duration) ease-in-out,
+          filter var(--animation-duration) ease-in-out;
+      }
+
+      .carousel > .item.hidden-up {
+        font-size: 0.85em;
+
+        top: 0;
+
+        transform: rotateX(20deg);
+        transform-origin: 50% 100%;
+
+        -webkit-mask-image: linear-gradient(to bottom, transparent, black 125%);
+        mask-image: linear-gradient(to bottom, transparent, black 125%);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+      }
+
+      .carousel > .item.active {
+        width: 100%;
+
+        top: 50%;
+        transform: translateY(-50%);
+
+        color: var(--color-gold);
+
+        border-inline: 0.0625em solid var(--color-gold);
+        padding-block: 0.71em;
+
+        border-radius: 0.125em;
+
+        filter: brightness(1.4) drop-shadow(0em 0 0.15em var(--color-gold))
+          saturate(2) contrast(1.2);
+      }
+
+      .carousel > .item.hidden-down {
+        font-size: 0.85em;
+
+        top: 100%;
+        transform: translateY(-100%) rotateX(-20deg);
+        transform-origin: 50% 0%;
+
+        -webkit-mask-image: linear-gradient(to top, transparent, black 125%);
+        mask-image: linear-gradient(to top, transparent, black 125%);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+      }
+
+      .carousel > .item.opacity-0 {
+        transition: none;
+        opacity: 0;
+      }
+
+      .carousel > .item.now-hidden {
+        transition: none;
+        opacity: 0;
+        bottom: -100%;
+      }
+
+      .carousel-container {
+        display: flex;
+        gap: 0.25em;
+
+        flex-direction: column;
+
+        align-items: center;
+      }
+
+      .btn-arrow {
+        border: none;
+        background: none;
+        height: 1em;
+
+        color: var(--color-gold);
+      }
+
+      .btn-arrow svg {
+        width: 100%;
+        height: 75%;
+      }
+
+      .btn-arrow--up svg {
+        --rotate: -135deg;
+        transform: rotate(var(--rotate));
+      }
+
+      .btn-arrow--down svg {
+        --rotate: 45deg;
+        transform: rotate(var(--rotate));
+      }
+
+      .btn-arrow:hover {
+        cursor: pointer;
+      }
+
+      .btn-arrow svg {
+        transition: filter 0.3s ease;
+        fill: #666; /* Color base */
+      }
+
+      .btn-arrow svg:hover {
+        filter: brightness(1.4) drop-shadow(0 0 0.05em var(--color-gold))
+          saturate(2) contrast(1.2);
+        cursor: pointer;
+
+        animation: rotateEffect 0.3s ease forwards;
+      }
+
+      /* animacion de mover dos grados a un lado y al otro y dejar en la posision original */
+
+      @keyframes rotateEffect {
+        0% {
+          transform: rotate(var(--rotate));
+        }
+
+        25% {
+          transform: rotate(calc(var(--rotate) + 15deg));
+        }
+
+        75% {
+          transform: rotate(calc(var(--rotate) - 15deg));
+        }
+
+        100% {
+          transform: rotate(var(--rotate));
+        }
+      }
+
+      @media (max-width: 900px) {
+        .btn-calculate {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <button class="btn-calculate">Aceptar</button>
+    </div>
+
+    <script defer>
+      const months = [
+        ["Enero", 31],
+        ["Febrero", 29],
+        ["Marzo", 31],
+        ["Abril", 30],
+        ["Mayo", 31],
+        ["Junio", 30],
+        ["Julio", 31],
+        ["Agosto", 31],
+        ["Septiembre", 30],
+        ["Octubre", 31],
+        ["Noviembre", 30],
+        ["Diciembre", 31],
+      ];
+
+      const zodiacSigns = {
+        Aries: {
+          start: [3, 21],
+          end: [4, 20],
+        },
+        Taurus: {
+          start: [4, 21],
+          end: [5, 20],
+        },
+        Gemini: {
+          start: [5, 21],
+          end: [6, 20],
+        },
+        Cancer: {
+          start: [6, 21],
+          end: [7, 22],
+        },
+        Leo: {
+          start: [7, 23],
+          end: [8, 23],
+        },
+        Virgo: {
+          start: [8, 24],
+          end: [9, 22],
+        },
+        Libra: {
+          start: [9, 23],
+          end: [10, 24],
+        },
+        Scorpio: {
+          start: [10, 25],
+          end: [11, 22],
+        },
+        Sagittarius: {
+          start: [11, 23],
+          end: [12, 21],
+        },
+        Capricorn: {
+          start: [12, 22],
+          end: [1, 20],
+        },
+        Aquarius: {
+          start: [1, 21],
+          end: [2, 19],
+        },
+        Pisces: {
+          start: [2, 20],
+          end: [3, 20],
+        },
+      };
+
+      // SVG
+
+      const svgArrow = `<!-- License: CC Attribution. Made by game-icons.net: https://game-icons.net -->
+<svg width="512px" height="512px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M20.91 20.002v32.29l357.793 338.9L20.91 101.407v58.942l355.942 250.224-86.89-17.527 26.913 30.947-70.502 3.008 245.633 64.603-65.502-249.054-15.352 92.36-27.3-31.46 16.683 60.464L161.26 20.002h-22.37l142.276 208.935L109.496 42.17l98.975 138.547L45.194 20.002H20.91zm433 92.186l-32.234 38.482 55.19 208.21 15.286-217.794-38.242-28.9zm-231.88 327.89l-24.975 23.47 21.674 27.62 149.225-12.78-145.926-38.31z"/></svg>`;
+
+      const monthsContainer = document.querySelector(".container");
+      const monthsArray = months.map((month) => month[0]);
+      const calculateButton = document.querySelector(".btn-calculate");
+
+      calculateButton.addEventListener("click", () => {
+        const zodiac = getZodiac(getDate());
+        alert(`Tu signo zodiacal es: ${zodiac}`);
+      });
+
+      const monthsCarousel = createCarousel(monthsArray, {
+        callback: updateDayCarousel,
+        id: "month-carousel",
+      });
+
+      let daysCarousel;
+      daysCarousel = updateDayCarousel();
+
+      monthsCarousel.carrusel.classList.add("carousel--left");
+
+      monthsContainer.appendChild(monthsCarousel.carrusel);
+      monthsContainer.appendChild(daysCarousel.carrusel);
+
+      function updateDayCarousel() {
+        const currentMonthIndex = monthsCarousel.getValue();
+        const daysCount = months[currentMonthIndex][1];
+        let daysValue = "0";
+        // Validate if daysCarousel is already created
+        const daysCarouselElement = document.querySelector("#days-carousel");
+        if (daysCarouselElement) {
+          daysValue = daysCarouselElement
+            .querySelector(".active")
+            .getAttribute("value");
+          daysCarouselElement.remove();
+        }
+
+        const newDaysArray = Array.from({ length: daysCount }, (_, i) => i + 1);
+        const newdaysCarousel = createCarousel(newDaysArray, {
+          id: "days-carousel",
+        });
+        newdaysCarousel.setValue(daysValue);
+
+        monthsContainer.appendChild(newdaysCarousel.carrusel);
+        daysCarousel = newdaysCarousel;
+
+        newdaysCarousel.carrusel.classList.add("carousel--right");
+        return newdaysCarousel;
+      }
+
+      function getDate() {
+        const day = parseInt(daysCarousel.getValue()) + 1;
+        const month = parseInt(monthsCarousel.getValue()) + 1;
+
+        return { day, month };
+      }
+
+      function getZodiac({ day, month }) {
+        for (const sign in zodiacSigns) {
+          const start = zodiacSigns[sign].start;
+          const end = zodiacSigns[sign].end;
+
+          if (
+            (month === start[0] && day >= start[1]) ||
+            (month === end[0] && day <= end[1])
+          ) {
+            return sign;
+          }
+        }
+      }
+
+      // evento de la tecla enter
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          const zodiac = getZodiac(getDate());
+          alert(`Tu signo zodiacal es: ${zodiac}`);
+        }
+      });
+
+      function createCarousel(items, options = {}) {
+        const {
+          tag = "div",
+          tagContainer = "div",
+          controls = true,
+          callback = () => {},
+          id,
+        } = options;
+        const carrusel = document.createElement(tagContainer);
+        carrusel.setAttribute("id", id);
+        carrusel.classList.add("carousel-container");
+
+        const container = document.createElement(tagContainer);
+        container.classList.add("carousel");
+
+        function addElements(container, elements) {
+          container.innerHTML = "";
+          elements.forEach((element, index) => {
+            container.innerHTML += `
+        <${tag} value="${index}" class="item now-hidden">
+          ${element}
+        </${tag}>
+      `;
+          });
+        }
+
+        function addControls() {
+          const prevButton = document.createElement("button");
+          prevButton.innerHTML = svgArrow;
+          prevButton.classList.add("btn-arrow", "btn-arrow--up");
+          prevButton.addEventListener("click", () => moveCarousel("up"));
+
+          const nextButton = document.createElement("button");
+
+          nextButton.innerHTML = svgArrow;
+          nextButton.classList.add("btn-arrow", "btn-arrow--down");
+          nextButton.addEventListener("click", () => moveCarousel("down"));
+
+          carrusel.appendChild(prevButton);
+          carrusel.appendChild(container);
+          carrusel.appendChild(nextButton);
+        }
+
+        function updateElementClass(element, newClass) {
+          element.className = "item";
+          element.classList.add(newClass);
+        }
+
+        function getPrevElement(element) {
+          return element.previousElementSibling || container.lastElementChild;
+        }
+
+        function getNextElement(element) {
+          return element.nextElementSibling || container.firstElementChild;
+        }
+
+        function getValue() {
+          const activeElement = carrusel.querySelector(".active");
+          return activeElement.getAttribute("value");
+        }
+
+        function setValue(Value) {
+          let newValue = parseInt(Value);
+          if (newValue > items.length - 1) {
+            newValue = items.length - 1;
+          }
+          const activeElement = carrusel.querySelector(".active");
+          const nextElement = carrusel.querySelector(".hidden-up");
+          const prevElement = carrusel.querySelector(".hidden-down");
+
+          const newActive = carrusel.querySelector(`[value="${newValue}"]`);
+
+          updateElementClass(prevElement, "now-hidden");
+          updateElementClass(nextElement, "now-hidden");
+          updateElementClass(activeElement, "now-hidden");
+          updateElementClass(newActive, "active");
+          updateElementClass(getPrevElement(newActive), "hidden-up");
+          updateElementClass(getNextElement(newActive), "hidden-down");
+        }
+
+        function moveCarousel(direction, delay = 100) {
+          // Cancelar cualquier timeout activo en todos los elementos del carrusel
+          const allElements = container.querySelectorAll(tag);
+
+          document.documentElement.style.setProperty(
+            "--animation-duration",
+            `${delay}ms`
+          );
+
+          allElements.forEach((el) => {
+            if (el.hideTimeout) {
+              clearTimeout(el.hideTimeout);
+              delete el.hideTimeout;
+            }
+          });
+
+          const activeElement = container.querySelector(".active");
+          const nextElement =
+            direction === "up"
+              ? getPrevElement(activeElement)
+              : getNextElement(activeElement);
+          const prevElement =
+            direction === "up"
+              ? getNextElement(activeElement)
+              : getPrevElement(activeElement);
+          const nextNextElement =
+            direction === "up"
+              ? getPrevElement(nextElement)
+              : getNextElement(nextElement);
+
+          const mapping = {
+            up: {
+              activeHidden: "hidden-down",
+              nextNextHidden: "hidden-up",
+            },
+            down: {
+              activeHidden: "hidden-up",
+              nextNextHidden: "hidden-down",
+            },
+          };
+
+          updateElementClass(activeElement, mapping[direction].activeHidden);
+          updateElementClass(nextElement, "active");
+          updateElementClass(
+            nextNextElement,
+            mapping[direction].nextNextHidden
+          );
+
+          prevElement.classList.add("opacity-0");
+          prevElement.hideTimeout = setTimeout(() => {
+            updateElementClass(prevElement, "now-hidden");
+            delete prevElement.hideTimeout;
+            if (typeof callback === "function") {
+              callback();
+            }
+          }, delay);
+        }
+
+        // Inicialización del carrusel:
+        addElements(container, items);
+
+        if (controls) {
+          addControls();
+        }
+
+        const firstElement = container.firstElementChild;
+        const nextElement = getNextElement(firstElement);
+        const prevElement = getPrevElement(firstElement);
+
+        updateElementClass(firstElement, "active");
+        updateElementClass(prevElement, "hidden-up");
+        updateElementClass(nextElement, "hidden-down");
+
+        // Eventos sobre el contenedor
+        container.addEventListener(
+          "wheel",
+          (event) => {
+            // event.deltaY: valores negativos al desplazar hacia arriba, positivos hacia abajo
+            const delay = 0;
+
+            if (event.deltaY < 0) {
+              moveCarousel("up", delay);
+            } else if (event.deltaY > 0) {
+              moveCarousel("down", delay);
+            }
+          },
+          { passive: true }
+        );
+
+        container.addEventListener("click", (event) => {
+          // Se obtiene el rectángulo delimitador del contenedor
+          const rect = container.getBoundingClientRect();
+          const height = rect.height;
+          // Se calcula el centro vertical del contenedor
+          const middleY = rect.top + height / 2;
+          // Se define un gap del 10% (5% arriba y 5% abajo del centro)
+          const gapOffset = height * 0.1;
+          const gapStart = middleY - gapOffset;
+          const gapEnd = middleY + gapOffset;
+
+          if (event.clientY < gapStart) {
+            moveCarousel("up");
+          } else if (event.clientY > gapEnd) {
+            moveCarousel("down");
+          }
+          // Si el clic se produce dentro del gap, no se realiza ninguna acción.
+        });
+
+        return {
+          carrusel: carrusel,
+          move: moveCarousel,
+          getValue,
+          setValue,
+        };
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,91 @@
+----------------------------------------------------------------------------------------------------------------------------
+
+Situación: Terminar mis actividades a tiempo.
+Condiciones:  
+1. Trabajar en las actividades al menos 1 hora al dia.
+2. No distraerme con redes sociales.
+
+Explicación:  
+- Si trabajo menos de una hora al dia podría no avanzar lo suficiente, y si me distraigo con redes sociales no podré terminar a tiempo.
+
+Negación:  
+- La segunda condición es una negación de la distracción con redes sociales.
+
+Tipo: Conjunción
+
+Enunciado compuesto:  
+Si trabajo en las actividades al menos 1 hora al dia Y no me distraigo con redes sociales ENTOCES terminaré mis actividades a tiempo.
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Situación: Comprar un teléfono nuevo.
+Condiciones:
+1. Ahorrar $500.00
+2. No gastar en cosas innecesarias.
+
+Explicación:
+Si no ahorro $500.00 no podré comprar el teléfono, y si gasto en cosas innecesarias no podré ahorrar lo suficiente.
+
+Negación:
+- La segunda condición es una negación de gastar en cosas innecesarias.
+
+Tipo: Conjunción
+
+Enunciado compuesto:
+Si ahorro $500.00 Y no gasto en cosas innecesarias ENTOCES podré comprar un teléfono nuevo.
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Situación: Aprobar el examen de matemáticas.
+Condiciones:
+1. Estudiar al menos 2 horas al día.
+2. No faltar al examen.
+
+Explicación:
+Si estudio menos de 2 horas al día podría no comprender los temas, y si falto al examen no podré aprobarlo.
+
+Negación:
+- La segunda condición es una negación de faltar al examen.
+
+Tipo: Conjunción
+
+Enunciado compuesto:
+Si estudio al menos 2 horas al día Y no falto al examen ENTOCES podré aprobar el examen de matemáticas.
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Situación: Dar un regalo para mi mamá.
+Condiciones:
+1. Ir de compras al centro comercial.
+2. Comprar un regalo en linea.
+
+Explicación:
+Si no voy de compras al centro comercial o no comprar un regalo en linea no podré encontrar un regalo para mi mamá.
+
+Negación:
+- No hay negación.
+
+Tipo: Disyunción
+
+Enunciado compuesto:
+Si voy de compras al centro comercial O comprar un regalo en linea ENTOCES podré dar un regalo para mi mamá.
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Situación: Hacer ejercicio.
+Condiciones:
+1. Ir al gimnasio.
+2. Hacer ejercicio en casa.
+
+Explicación:
+Si no voy al gimnasio o no hago ejercicio en casa no podré hacer ejercicio.
+
+Negación:
+- No hay negación.
+
+Tipo: Disyunción
+
+Enunciado compuesto:
+Si voy al gimnasio O hago ejercicio en casa ENTOCES podré hacer ejercicio.
+
+----------------------------------------------------------------------------------------------------------------------------

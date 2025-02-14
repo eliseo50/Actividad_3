@@ -1,0 +1,38 @@
+ALGORITMO 1: Hacer un licuado de frutas tropicales
+
+- Reunir las frutas tropicales, agua o leche, licuadora, cuchillo.
+- Encender chorro.
+- Lavar bien las frutas.
+- Apagar chorro.
+- Pelar y cortar las frutas en trozos pequeños.
+- Destapar la licuadora.
+- Verter en la licuadora agua o leche.
+- Agregar los trozos de fruta en la licuadora.
+- Agregar hielo al gusto.
+- Tapar la licuadora.
+- Enchufar la licuadora.
+- Encender la licuadora y mezclar hasta obtener una consistencia homogénea.
+- Apagar la licuadora.
+- Destapar la licuadora.
+- Verter el licuado en un vaso.
+- Disfrutar del licuado de frutas tropicales.
+
+ALGORITMO 2: Sacar a pasear a un perro
+
+- Reunir el collar, la correa y las bolsas para recoger desechos.
+- Colocar el collar en el perro.
+- Atar la correa al collar.
+- Abrir la puerta.
+- Salir de casa con el perro.
+- Cerrar la puerta.
+- Caminar por la calle con el perro
+- Permitir que el perro explore y haga sus necesidades.
+- Recolectar las heces del perro utilizando las bolsas.
+- Volver a casa.
+- Abrir la puerta.
+- Entrar a casa con el perro.
+- Cerrar la puerta.
+- Quitar la correa y el collar al perro.
+- Tirar las bolsas a la basura.
+- Guardar la correa, el collar.
+- Ofrecer agua y descanso al perro.

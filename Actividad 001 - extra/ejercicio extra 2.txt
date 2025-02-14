@@ -1,0 +1,18 @@
+Problema de gestión del tiempo en el trabajo
+
+Descripción:
+Solia tener problemas para organizar mi tiempo y realizar las distintas tareas del trabajo.
+
+Solución:
+
+1. Iniciar el dia leyendo los correos y asignaciones del trabajo.
+2. Escribir una lista de tareas con todos los pendiente.
+3. Organizar los elementos de la lista en orden de urgencia e importancia.
+4. Se asigna un tiempo estimado a cada elemento.
+5. Iniciar con el primer elemento de la lista.
+6. Al recibir una nueva asignación:
+   - Si no es urgente, agregarla a la lista.
+   - Si es urgente, pausar la tarea actual (si es posible) y atender la nueva asignación.
+7. Revisar el progreso a mitad del día y ajustar la lista si es necesario.
+8. Al finalizar el dia se revisa nuevamente la lista se reorganizan los elementos pendientes.
+9. Se repite el proceso al dia siguiente.

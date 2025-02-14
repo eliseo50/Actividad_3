@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        font: inherit;
+      }
+
+      :root {
+        --color-accent: #cefc47;
+        --color-black: #000;
+        --color-white: #fff;
+        --color-grey: #d9d8dc;
+
+        --font-family-title: "Coiny", serif;
+        --font-family: "Lexend", serif;
+      }
+
+      video,
+      img,
+      picture,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+
+      body {
+        min-height: 100vh;
+        font-family: var(--font-family);
+        font-weight: 400;
+        font-style: normal;
+        background-color: var(--color-grey);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .wrapper {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .card__container {
+        position: relative;
+        margin-inline: auto;
+
+        perspective: 1000px;
+      }
+
+      .card {
+        width: 250px;
+        aspect-ratio: 5 / 7;
+        transform-style: preserve-3d;
+        transition: transform 500ms ease;
+        position: relative;
+      }
+
+      .card__container.active .card {
+        transform: rotateY(180deg);
+      }
+
+      .card__content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        background-color: var(--color-white);
+
+        border-radius: 1rem;
+        padding: 1rem;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .card__content--back {
+        transform: rotateY(180deg);
+      }
+
+      .card__title {
+        font-family: var(--font-family-title);
+        font-size: 1.25rem;
+        text-align: center;
+        margin-bottom: 1rem;
+
+        color: var(--color-black);
+      }
+
+      .card__display {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+        font-size: 3rem;
+        color: var(--color-black);
+      }
+
+      .card__display {
+        width: 100%;
+      }
+
+      .card__input {
+        text-align: center;
+        font-size: 4rem;
+        color: var(--color-black);
+        border: none;
+        border-bottom: 0.25rem solid transparent;
+        width: 100%;
+      }
+
+      .card__input:focus {
+        outline: none;
+        border-bottom: 0.25rem solid var(--color-accent);
+      }
+
+      .card__input::-webkit-outer-spin-button,
+      .card__input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      .card__buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .card__button {
+        border: none;
+        background-color: var(--color-black);
+        color: var(--color-white);
+        padding: 0.5rem 2rem;
+        border-radius: 5rem;
+        cursor: pointer;
+
+        line-height: 1em;
+        font-weight: bold;
+
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.5px 1px;
+      }
+
+      .card__button--small {
+        width: 25%;
+        padding: 0.5rem 1rem;
+      }
+
+      .card__button:hover {
+        background-color: var(--color-white);
+        color: var(--color-black);
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+          rgba(0, 0, 0, 0.3) 0px 1px 6px -1px inset;
+      }
+
+      .card__button--big {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.25rem;
+        margin-top: 1rem;
+
+        background-color: var(--color-accent);
+        color: var(--color-black);
+      }
+
+      .card__result {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        width: 100%;
+
+        color: var(--color-black);
+        font-size: 2rem;
+
+        gap: 1rem;
+      }
+
+      .card__choice {
+        text-align: center;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.25rem;
+      }
+
+      .card__choice h3 {
+        font-weight: bold;
+
+        font-size: 0.5em;
+        line-height: 1em;
+        font-weight: 400;
+      }
+
+      .card__choice span {
+        font-size: 1em;
+        font-family: var(--font-family-title);
+        background-color: var(--color-accent);
+        line-height: 1em;
+        padding: 0.5rem;
+        padding-bottom: 0.25rem;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        border-radius: 0.25rem;
+      }
+      .card__compare {
+        font-weight: bold;
+      }
+
+      .result__mesagge {
+        font-family: var(--font-family-title);
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+        color: var(--color-black);
+        text-align: center;
+        margin-block: auto;
+      }
+
+      .card__buttons--choice {
+        background-color: var(--color-grey);
+        color: var(--color-black);
+
+        border-radius: 0.25rem;
+        gap: 0.25rem;
+
+        position: relative;
+      }
+
+      .card__buttons--choice input {
+        display: none;
+      }
+
+      .card__buttons--choice label {
+        cursor: pointer;
+        padding: 0.5rem;
+        z-index: 1;
+
+        width: calc(100% / 3);
+        text-align: center;
+      }
+
+      .card__buttons--choice input + label:hover {
+        background-color: #00000010;
+      }
+
+      .card__buttons--choice input:checked + label:hover {
+        background-color: transparent;
+      }
+
+      .glider {
+        position: absolute;
+        display: flex;
+        height: 100%;
+        width: calc(100% / 3);
+        background-color: var(--color-accent);
+        border-radius: 0.25rem;
+        transition: 0.25s ease-out;
+      }
+
+      #user_choice1:checked ~ .glider {
+        transform: translateX(0);
+      }
+
+      #user_choice2:checked ~ .glider {
+        transform: translateX(100%);
+      }
+
+      #user_choice3:checked ~ .glider {
+        transform: translateX(200%);
+      }
+
+      .card__buttons--medium {
+        gap: 0.5rem;
+
+        font-size: 0.5rem;
+      }
+
+      .card__buttons--medium .card__button {
+        padding: 0.25rem 1rem;
+        font-size: 0.75rem;
+      }
+
+      .dialog-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .dialog-container.active {
+        display: flex;
+      }
+
+      .dialog {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        min-width: 300px;
+        width: 80%;
+      }
+
+      .dialog h2 {
+        color: #333;
+        margin-bottom: 16px;
+        font-size: 24px;
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Coiny&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="card__container">
+        <div class="card">
+          <div class="card__content card__content--front">
+            <h2 class="card__title">Adivina el Numero</h2>
+            <div class="card__display">
+              <input
+                class="card__input"
+                type="number"
+                id="number_input"
+                value="5"
+                min="1"
+                max="9"
+              />
+            </div>
+            <div class="card__buttons">
+              <button id="less" class="card__button card__button--small">
+                <?xml version="1.0" encoding="utf-8"?>
+                <!-- License: PD. Made by stephenhutchings: https://github.com/stephenhutchings/typicons.font -->
+                <svg
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  version="1.2"
+                  baseProfile="tiny"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M18 11h-12c-1.104 0-2 .896-2 2s.896 2 2 2h12c1.104 0 2-.896 2-2s-.896-2-2-2z"
+                  />
+                </svg>
+              </button>
+
+              <button id="more" class="card__button card__button--small">
+                <?xml version="1.0" encoding="utf-8"?>
+                <!-- License: PD. Made by stephenhutchings: https://github.com/stephenhutchings/typicons.font -->
+                <svg
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  version="1.2"
+                  baseProfile="tiny"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M18 10h-4v-4c0-1.104-.896-2-2-2s-2 .896-2 2l.071 4h-4.071c-1.104 0-2 .896-2 2s.896 2 2 2l4.071-.071-.071 4.071c0 1.104.896 2 2 2s2-.896 2-2v-4.071l4 .071c1.104 0 2-.896 2-2s-.896-2-2-2z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div
+              class="card__buttons card__buttons--small card__buttons--choice"
+            >
+              <input
+                type="radio"
+                name="user_choice"
+                id="user_choice1"
+                value="1"
+              />
+              <label for="user_choice1">Menor</label>
+              <input
+                type="radio"
+                name="user_choice"
+                id="user_choice2"
+                value="2"
+                checked
+              />
+              <label for="user_choice2">Igual</label>
+              <input
+                type="radio"
+                name="user_choice"
+                id="user_choice3"
+                value="3"
+              />
+              <label for="user_choice3">Mayor</label>
+              <span class="glider"></span>
+            </div>
+            <button id="play" class="card__button card__button--big">
+              Jugar!
+            </button>
+          </div>
+          <div class="card__content card__content--back">
+            <h2 class="card__title">Resultados</h2>
+            <div class="card__result">
+              <div class="card__choice card__choice--cpu" id="cpu_number">
+                <h3>CPU</h3>
+                <span>2</span>
+              </div>
+              <div class="number__compare"></div>
+              <div class="card__choice card__choice--player" id="player_number">
+                <h3>You</h3>
+                <span>5</span>
+              </div>
+            </div>
+            <span class="result__mesagge result__mesagge--win"></span>
+            <div class="card__buttons card__buttons--medium">
+              <button id="restart" class="card__button card__button--big">
+                Volver a Jugar
+              </button>
+
+              <button id="end" class="card__button card__button--big">
+                Finalizar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog-container">
+      <div class="dialog">
+        <h2>Información del Estudiante</h2>
+        <p>Nombre: Guillermo Eliseo Gómez Reyes</p>
+        <p>Carnet: 18002971</p>
+      </div>
+    <script>
+      const svg = `                <?xml version='1.0' encoding='utf-8'?>
+                <!-- License: MIT. Made by framework7io: https://github.com/framework7io/framework7-icons -->
+                <svg
+                  fill='currentColor'
+                  viewBox='0 0 56 56'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <path
+                    d='M 13.8320 43.5625 C 14.4883 43.5625 14.9336 43.3516 15.4258 43.1172 L 41.7695 31.2813 C 43.1055 30.6484 44.1602 29.6172 44.1602 28.1172 C 44.1602 26.6406 43.1289 25.5625 41.7461 24.9532 L 15.4258 12.8359 C 14.9570 12.6016 14.5351 12.4375 13.9258 12.4375 C 12.7070 12.4375 11.8398 13.2813 11.8398 14.5235 C 11.8398 15.6016 12.4023 16.2110 13.3867 16.6797 L 38.6055 27.8125 L 38.6055 28.0703 L 13.3867 39.2969 C 12.4023 39.7656 11.8398 40.3750 11.8398 41.4531 C 11.8398 42.7422 12.6836 43.5625 13.8320 43.5625 Z'
+                  /></svg>`;
+
+      const numberInput = document.getElementById("number_input");
+      const less = document.getElementById("less");
+      const more = document.getElementById("more");
+      const play = document.getElementById("play");
+      const card = document.querySelector(".card__container");
+      const cpuNumber = document.querySelector("#cpu_number span");
+      const playerNumber = document.querySelector("#player_number span");
+      const choices = document.getElementsByName("user_choice");
+      const compare = document.querySelector(".number__compare");
+      const result = document.querySelector(".result__mesagge");
+      const restart = document.getElementById("restart");
+      const end = document.getElementById("end");
+      const dialog = document.querySelector(".dialog-container");
+
+      less.addEventListener("click", () => {
+        numberInput.value < 2 ? (numberInput.value = 1) : numberInput.value--;
+      });
+      more.addEventListener("click", () => {
+        numberInput.value > 8 ? (numberInput.value = 9) : numberInput.value++;
+      });
+      numberInput.addEventListener("input", () => {
+        numberInput.value > 9 ? (numberInput.value = 9) : numberInput.value;
+        numberInput.value < 1 ? (numberInput.value = 1) : numberInput.value;
+      });
+
+      play.addEventListener("click", () => {
+        const cpuValue = Math.floor(Math.random() * 9) + 1;
+        const playerValue = parseInt(numberInput.value);
+        const userChoice = getUserChoice();
+        const { message, isWin, choiceText } = getMessage(
+          userChoice,
+          cpuValue,
+          playerValue
+        );
+
+        cpuNumber.textContent = cpuValue;
+        playerNumber.textContent = playerValue;
+        compare.innerHTML = choiceText.sign;
+
+        result.textContent = message;
+        card.classList.add("active");
+      });
+
+      restart.addEventListener("click", () => {
+        card.classList.remove("active");
+        numberInput.value = 5;
+        play.disabled = true;
+
+        setTimeout(() => {
+          play.disabled = false;
+          result.textContent = "";
+          compare.innerHTML = "";
+          cpuNumber.textContent = "";
+          playerNumber.textContent = "";
+        }, 300);
+      });
+
+      end.addEventListener("click", () => {
+        dialog.classList.add("active");
+      });
+
+      function getUserChoice() {
+        for (const choice of choices) {
+          if (choice.checked) {
+            return parseInt(choice.value);
+          }
+        }
+      }
+
+      function getMessage(userChoice, cpuValue, playerValue) {
+        const isEqual = cpuValue === playerValue;
+        const isLess = cpuValue < playerValue;
+
+        let choiceText;
+        let isWin;
+        if (userChoice === 1) {
+          choiceText = { text: "menor", sign: "" };
+          isWin = playerValue < cpuValue;
+        } else if (userChoice === 2) {
+          choiceText = { text: "igual", sign: "" };
+          isWin = playerValue === cpuValue;
+        } else if (userChoice === 3) {
+          choiceText = { text: "mayor", sign: "" };
+          isWin = playerValue > cpuValue;
+        }
+
+        choiceText.sign = isEqual ? "=" : isLess ? "<" : ">";
+
+        const message = `${
+          isWin ? "Ganaste! :)" : "Perdiste :("
+        }, El numero ${playerValue} ${isWin ? "es" : "no es"} ${
+          choiceText.text
+        } que ${cpuValue}`;
+        return { message, isWin, choiceText };
+      }
+    </script>
+  </body>
+</html>

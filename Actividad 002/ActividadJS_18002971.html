@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Get Zodiac</title>
+  </head>
+  <body>
+    <script>
+      const zodiacSigns = {
+        Aries: {
+          start: [3, 21],
+          end: [4, 20],
+        },
+        Taurus: {
+          start: [4, 21],
+          end: [5, 20],
+        },
+        Gemini: {
+          start: [5, 21],
+          end: [6, 20],
+        },
+        Cancer: {
+          start: [6, 21],
+          end: [7, 22],
+        },
+        Leo: {
+          start: [7, 23],
+          end: [8, 23],
+        },
+        Virgo: {
+          start: [8, 24],
+          end: [9, 22],
+        },
+        Libra: {
+          start: [9, 23],
+          end: [10, 24],
+        },
+        Scorpio: {
+          start: [10, 25],
+          end: [11, 22],
+        },
+        Sagittarius: {
+          start: [11, 23],
+          end: [12, 21],
+        },
+        Capricorn: {
+          start: [12, 22],
+          end: [1, 20],
+        },
+        Aquarius: {
+          start: [1, 21],
+          end: [2, 19],
+        },
+        Pisces: {
+          start: [2, 20],
+          end: [3, 20],
+        },
+      };
+
+      const month = parseInt(
+        prompt("Ingresa el mes de tu cumpleaños (en número):")
+      );
+
+      const day = parseInt(prompt("Ingresa el día de tu cumpleaños:"));
+
+      const zodiacSign = getZodiac({ day, month });
+      alert(
+        zodiacSign
+          ? "Tu signo zodiacal es: " + zodiacSign + "."
+          : "Fecha inválida"
+      );
+
+      function getZodiac({ day, month }) {
+        for (const sign in zodiacSigns) {
+          const start = zodiacSigns[sign].start;
+          const end = zodiacSigns[sign].end;
+
+          if (
+            (month === start[0] && day >= start[1]) ||
+            (month === end[0] && day <= end[1])
+          ) {
+            return sign;
+          }
+        }
+
+        return null;
+      }
+    </script>
+  </body>
+</html>
